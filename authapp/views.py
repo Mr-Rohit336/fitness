@@ -164,10 +164,8 @@ def enrollcounter(request):
     
 def otp(request):
     if request.method == 'POST':
-        user_input_otp = request.POST.get('otp')
-        print("this is for user input",user_input_otp)
-        otp_data = Otp.objects.latest('id') 
-        print("this is for first otp data",otp_data)
+        user_input_otp = request.POST.get('otp')        
+        otp_data = Otp.objects.latest('id')         
         if otp_data:
             stored_otp = otp_data.otp
             if int(user_input_otp) == stored_otp:  
@@ -191,7 +189,7 @@ def otp(request):
 
 def login_otp(request):
     if request.method == 'POST':
-        entered_otp = request.POST.get('otp')  # Assuming 'otp' is the name of your OTP input field
+        entered_otp = request.POST.get('otp')  
 
         # Retrieve the latest OTP from the database
         latest_otp_object = Otp.objects.latest('id')
@@ -220,9 +218,8 @@ def send_email(request):
     return redirect("/otpverification")
 
 def login_verification(request):
-    if request.method == 'POST':
-        send_mail_for_login(request)
-        return redirect("/otpverification")
+    send_mail_for_login(request)
+    return redirect("/otpverification")
 
 def services(request):
     return render(request, "services.html")
