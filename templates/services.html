@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}
+Services
+{% endblock title %}
+{% block body %}
+{% load static %}
+<h1></h1>
+<main id="main">
+<section id="about" class="about">
+                <div class="container" data-aos="fade-up">
+                  <div class="row">                      
+                    <div class="section-title" style="margin-bottom:40px;">
+                      <h2>Services</h2>
+                      <p>Sigma Gym Services</p>
+                    </div>            
+                      <!-- first img -->
+                        <div class="col-md-6" data-aos="fade-right" data-aos-delay="100">
+                         <img src="{% static 'assets/img/services/24-hourse.jpg' %}" class="img-fluid" alt="Responsive image" style="margin-bottom:25px;">
+                        </div>
+                        <div class="col-md-6" data-aos="fade-right" data-aos-delay="100">
+                          <h4><b>Membership</b></h4>
+                          <style>
+                           p {
+                            margin-top:-1px;
+                           }
+                          </style>
+                          <p>
+                            "Welcome to our gym, where dedication meets convenience! We're thrilled to announce that our doors are now open 24 hours a day, 7 days a week, to cater to your fitness needs around the clock.
+                            At Sigma Gym, we understand that your busy schedule shouldn't stand in the way of your fitness goals. Whether you're an early riser looking to kickstart your day with a morning workout, a night owl seeking to unwind after a long day, or simply someone who prefers to exercise on their own time, our 24-hour access ensures that you have the flexibility to work out whenever it suits you best.                            
+                            With our state-of-the-art facilities and dedicated staff available at all hours, you'll have everything you need to achieve your fitness aspirations, no matter the time of day. Whether you're lifting weights, hitting the treadmill, or joining one of our late-night classes, our gym is here to support you every step of the way.                            
+                            So, Join us at Sigma Gym and experience the convenience and flexibility of 24/7 access to a healthier, stronger you. Your fitness journey starts now!"
+                          </p>
+                        </div>  
+                      <!-- first img end -->  
+                        
+                      <!-- second img -->
+                        <div class="col-md-6" data-aos="fade-left" data-aos-delay="100">
+                          <h4><b>Personal Training</b></h4>
+                          <p>
+                            Unlock your full potential with our personalized and results-driven personal training sessions at Sigma Gym. 
+                            Our certified and experienced trainers are committed to tailoring workouts that align with your unique fitness goals, 
+                            whether it's weight loss, muscle gain, or overall wellness. 
+                            During one-on-one sessions, you'll receive focused attention, expert guidance, 
+                            and a customized fitness plan to maximize your time and effort. Our trainers don't just count reps; 
+                            they inspire, motivate, and celebrate your successes along the way. 
+                            With individualized attention, form correction, and constant support, 
+                            our personal training program is designed to empower you to achieve your fitness aspirations efficiently and safely. 
+                            Elevate your fitness journey with personalized coaching at Sigma Gym, 
+                            where every session brings you closer to your health and wellness objectives.
+                          </p>
+                        </div>  
+                        <div class="col-md-6" data-aos="fade-left" data-aos-delay="100">
+                          <img src="static/assets/img/Personal-training.jpg" class="img-fluid" alt="Responsive image" style="margin-bottom:25px;">
+                        </div>
+                      <!-- second img end -->  
+            
+                      <!-- third img -->
+                      <div class="col-md-6" data-aos="fade-right" data-aos-delay="100">
+                        <img src="static/assets/img/Group-Program.jpg" class="img-fluid" alt="Responsive image">
+                       </div>
+                       <div class="col-md-6" data-aos="fade-right" data-aos-delay="100">
+                         <h4><b>Group Program</b></h4>
+                         <style>
+                          p {
+                           margin-top:-1px;
+                          }
+                         </style>
+                         <p>
+                          Experience the energy of community and amplify your fitness journey with our dynamic group programs at Sigma Gym. 
+                          From invigorating group fitness classes to specialized training sessions, 
+                          we offer a variety of options to suit your preferences and fitness levels. 
+                          Join like-minded individuals in an atmosphere of motivation and camaraderie as our skilled instructors guide you through engaging workouts. 
+                          Whether you're into high-intensity training, yoga, or dance, 
+                          our diverse group programs cater to all interests. 
+                          Not only do these sessions provide a fun and social way to stay active, but they also foster a supportive environment where you can push your limits and achieve your fitness goals together. 
+                          Embrace the power of group fitness at Sigma Gym, where the collective energy propels everyone towards success, 
+                          making each workout a memorable and rewarding experience.
+                         </p>
+                       </div>  
+                     <!-- third img end --> 
+                      
+                  </div>
+                </div>
+              </section>
+            </main>
+{% endblock body %}
