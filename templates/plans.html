@@ -1,0 +1,31 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+Membership Plans
+{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <h1 class="mt-5">Membership Plans</h1><br>
+    <div class="row">
+        {% for plan in membership_plans %}
+        <div class="col-md-4">
+            <div class="card plan-card">
+                <div class="card-body">
+                    <!-- Display the plan image -->
+                    <img src="{{ plan.img.url }}" class="card-img-top" alt="Plan Image">
+                    <p class="card-text">{{ plan.plan }}</p>
+                    <a href="#" class="btn btn-primary" data-toggle="collapse" data-target="#plan{{ forloop.counter }}-details">View Details</a>
+                </div>
+                <div id="plan{{ forloop.counter }}-details" class="card plan-details collapse">
+                    <div class="card-body">
+                        {{ plan.plandetails }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock body %}

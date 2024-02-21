@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from authapp.models import Contact, MembershipPlan, Trainer, Enrollment, Gellery, Attendance, Otp
-from .utils import send_mail_to_client, send_mail_for_login
+from .utils import send_mail_to_client
 
 import random
 
@@ -98,12 +98,9 @@ def handlelogin(request):
         pass1=request.POST.get('pass1')
         myuser=authenticate(username=username,password=pass1)
         if myuser is not None:
-            # login(request,myuser)
-            # messages.success(request,"Login Successful")
-            otp_code_for_login = str(random.randint(1000, 9999))
-            otp_object_login = Otp.objects.create(otp=otp_code_for_login)
-
-            return redirect('/sendemail_to_login')
+            login(request,myuser)
+            messages.success(request,"Login Successful")
+            return redirect('/')
         else:
             messages.error(request,"Invalid Credentials")
             return redirect('/login')
@@ -187,42 +184,21 @@ def otp(request):
         
     return render(request, "otp.html")
 
-def login_otp(request):
-    if request.method == 'POST':
-        entered_otp = request.POST.get('otp')  
-
-        # Retrieve the latest OTP from the database
-        latest_otp_object = Otp.objects.latest('id')
-        latest_otp = latest_otp_object.otp
-        user = latest_otp_object.user  # Assuming you have a ForeignKey in your Otp model pointing to the User model
-
-        if entered_otp == latest_otp:
-            # OTP is correct, authenticate and login the user
-            user = authenticate(request, user=user)
-            if user is not None:
-                login(request, user)
-                # Redirect to the desired page after successful login
-                return redirect("/dashboard")  # Change "/dashboard" to your desired URL
-            else:
-                # Authentication failed for some reason
-                return render(request, 'login_failed_template.html')
-        else:
-            # Incorrect OTP
-            return render(request, 'incorrect_otp_template.html')
-    else:
-        # Render the OTP entry form for 'GET' requests
-        return render(request, "otp.html")
 
 def send_email(request):
     send_mail_to_client(request)
     return redirect("/otpverification")
 
-def login_verification(request):
-    send_mail_for_login(request)
-    return redirect("/otpverification")
 
 def services(request):
     return render(request, "services.html")
 
 def payment(request):
-    return render(request, "payment.html")    
+    return render(request, "payment.html")   
+
+def plans_view(request):
+    membership_plans = MembershipPlan.objects.all()
+    return render(request, "plans.html", {"membership_plans": membership_plans})
+
+def plans_details_view(request):    
+    return render(request, "plandetails.html")

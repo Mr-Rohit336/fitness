@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Membership Plans
+{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <h1 class="mt-5">Plan Details</h1>
+    <div class="card mt-3">
+      <div class="card-body">
+        <img src="#" class="card-img-top" alt="Plan Image">        
+        <p class="card-text">{{ plan.plan }}</p>
+        <p class="card-text">Description of the plan goes here.</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Feature 1: Description of feature 1</li>
+          <li class="list-group-item">Feature 2: Description of feature 2</li>
+          <li class="list-group-item">Feature 3: Description of feature 3</li>
+          <!-- Add more features as needed -->
+        </ul>
+        <a href="plans.html" class="btn btn-primary mt-3">Back to Plans</a>
+      </div>
+    </div>
+  </div>
+{% endblock body %}

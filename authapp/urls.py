@@ -15,11 +15,11 @@ urlpatterns = [
     path('services/',views.services,name="services"),
     #otp verificatio
     path('otpverification/', views.otp, name="otp_verificat"),
-    path('sendemail/', views.send_email, name="send_email"),
-   
-    path('sendemail_to_login/', views.login_verification, name="send_otp_verificatin"),
+    path('sendemail/', views.send_email, name="send_email"),       
    
    #payment
+    path('plans/', views.plans_view, name="membership plans"),
+    path('plandetails/', views.plans_details_view, name="membership plans details"),
     path('payment/', views.payment, name="payments"),   
 ]
  

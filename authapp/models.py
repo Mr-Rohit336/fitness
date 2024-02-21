@@ -45,8 +45,10 @@ class Trainer(models.Model):
        return self.name
     
 class MembershipPlan(models.Model):
+    img=models.ImageField(upload_to='plans', default='default_img.jpg')
     plan=models.CharField(max_length=185)
     price=models.IntegerField(max_length=55)
+    plandetals=models.TextField(default='Membership Plan')
     
     def __str__(self):
        return self.plan
@@ -73,8 +75,4 @@ class Attendance(models.Model):
 #otp verifivation    
     
 class Otp(models.Model):
-    otp = models.IntegerField(max_length=4)
-    
-class LoginOtp(models.Model):
-    otp = models.IntegerField()
-    
+    otp = models.IntegerField(max_length=4)    
