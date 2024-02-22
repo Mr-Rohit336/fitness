@@ -18,8 +18,8 @@ urlpatterns = [
     path('sendemail/', views.send_email, name="send_email"),       
    
    #payment
-    path('plans/', views.plans_view, name="membership plans"),
-    path('plandetails/', views.plans_details_view, name="membership plans details"),
+    path('plans/', views.plans_view, name="membership_plans"),
+    path('plandetails/<int:plan_id>/', views.plans_details_view, name="membership_plans_details"),
     path('payment/', views.payment, name="payments"),   
 ]
  

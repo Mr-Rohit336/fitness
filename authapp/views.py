@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -128,21 +128,18 @@ def contact(request):
 def enroll(request):
     if not request.user.is_authenticated:
         messages.warning(request, "Please Login And Try  Again")
-        return redirect('/login')
-    Membership=MembershipPlan.objects.all()
+        return redirect('/login')    
     SelectTrainer=Trainer.objects.all()
-    context={"Membership":Membership, "SelectTrainer":SelectTrainer}
+    context={"SelectTrainer":SelectTrainer}
     if request.method=="POST":
         FullName=request.POST.get('FullName')
         email=request.POST.get('email')
-        gender=request.POST.get('gender')
         PhoneNumber=request.POST.get('PhoneNumber')
-        DOB=request.POST.get('DOB')
-        member=request.POST.get('member')
-        trainer=request.POST.get('trainer')
-        reference=request.POST.get('reference')
+        gender=request.POST.get('gender')        
+        DOB=request.POST.get('DOB')        
+        trainer=request.POST.get('trainer')        
         address=request.POST.get('address')
-        query=Enrollment(FullName=FullName, Email=email, Gender=gender, PhoneNumber=PhoneNumber, DOB=DOB, SelectMembershipplan=member, SelectTrainer=trainer, Reference=reference, Address=address)
+        query=Enrollment(FullName=FullName, Email=email, PhoneNumber=PhoneNumber, Gender=gender, DOB=DOB, SelectTrainer=trainer,  Address=address)
         query.save()
         messages.info(request, "Thanks For Enrollment")
         return redirect('/payment')        
@@ -200,5 +197,7 @@ def plans_view(request):
     membership_plans = MembershipPlan.objects.all()
     return render(request, "plans.html", {"membership_plans": membership_plans})
 
-def plans_details_view(request):    
-    return render(request, "plandetails.html")
+def plans_details_view(request, plan_id): 
+    plan = get_object_or_404(MembershipPlan, id=plan_id)
+    price = get_object_or_404(MembershipPlan, id=plan_id)
+    return render(request, 'plandetails.html', {'plan': plan, 'price':price})

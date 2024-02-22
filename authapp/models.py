@@ -19,10 +19,8 @@ class Enrollment(models.Model):
     Email=models.EmailField(max_length=25)
     Gender=models.CharField(max_length=25)
     PhoneNumber=models.CharField(max_length=12)
-    DOB=models.CharField(max_length=25) 
-    SelectMembershipplan=models.CharField(max_length=200)
-    SelectTrainer=models.CharField(max_length=55)
-    Reference=models.CharField(max_length=55)
+    DOB=models.CharField(max_length=25)     
+    SelectTrainer=models.CharField(max_length=55)    
     Address=models.TextField()
     paymentStatus=models.CharField(max_length=55, blank=True, null=True)
     price=models.IntegerField(max_length=55, blank=True, null=True)
@@ -48,7 +46,7 @@ class MembershipPlan(models.Model):
     img=models.ImageField(upload_to='plans', default='default_img.jpg')
     plan=models.CharField(max_length=185)
     price=models.IntegerField(max_length=55)
-    plandetals=models.TextField(default='Membership Plan')
+    plandetails=models.TextField(default='Membership Plan')
     
     def __str__(self):
        return self.plan
