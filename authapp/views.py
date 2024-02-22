@@ -125,25 +125,55 @@ def contact(request):
         
     return render(request,"contact.html")
 
-def enroll(request):
+def enroll(request, plan_id):
     if not request.user.is_authenticated:
-        messages.warning(request, "Please Login And Try  Again")
-        return redirect('/login')    
-    SelectTrainer=Trainer.objects.all()
-    context={"SelectTrainer":SelectTrainer}
-    if request.method=="POST":
-        FullName=request.POST.get('FullName')
-        email=request.POST.get('email')
-        PhoneNumber=request.POST.get('PhoneNumber')
-        gender=request.POST.get('gender')        
-        DOB=request.POST.get('DOB')        
-        trainer=request.POST.get('trainer')        
-        address=request.POST.get('address')
-        query=Enrollment(FullName=FullName, Email=email, PhoneNumber=PhoneNumber, Gender=gender, DOB=DOB, SelectTrainer=trainer,  Address=address)
+        messages.warning(request, "Please Login And Try Again")
+        return redirect('/login')
+
+    # Retrieve the plan based on the plan_id
+    plan = get_object_or_404(MembershipPlan, id=plan_id)
+
+    SelectTrainer = Trainer.objects.all()
+
+    if request.method == "POST":
+        FullName = request.POST.get('FullName')
+        email = request.POST.get('email')
+        PhoneNumber = request.POST.get('PhoneNumber')
+        gender = request.POST.get('gender')
+        DOB = request.POST.get('DOB')
+        trainer = request.POST.get('trainer')
+        address = request.POST.get('address')
+        
+        # Create Enrollment instance
+        query = Enrollment(FullName=FullName, Email=email, PhoneNumber=PhoneNumber, Gender=gender, DOB=DOB,
+                           SelectTrainer=trainer, Address=address)
         query.save()
         messages.info(request, "Thanks For Enrollment")
-        return redirect('/payment')        
-    return render(request, "enroll.html",context)
+        return redirect('/payment/' + str(plan_id))  # Redirect to payment page with plan_id
+    else:
+        context = {"SelectTrainer": SelectTrainer, "plan_id": plan_id}
+        return render(request, "enroll.html", context)
+
+
+# def enroll(request):
+#     if not request.user.is_authenticated:
+#         messages.warning(request, "Please Login And Try  Again")
+#         return redirect('/login')    
+#     SelectTrainer=Trainer.objects.all()
+#     context={"SelectTrainer":SelectTrainer}
+#     if request.method=="POST":
+#         FullName=request.POST.get('FullName')
+#         email=request.POST.get('email')
+#         PhoneNumber=request.POST.get('PhoneNumber')
+#         gender=request.POST.get('gender')        
+#         DOB=request.POST.get('DOB')        
+#         trainer=request.POST.get('trainer')        
+#         address=request.POST.get('address')
+#         query=Enrollment(FullName=FullName, Email=email, PhoneNumber=PhoneNumber, Gender=gender, DOB=DOB, SelectTrainer=trainer,  Address=address)
+#         query.save()
+#         messages.info(request, "Thanks For Enrollment")
+#         return redirect('/payment')        
+#     return render(request, "enroll.html",context)
 
 def enrollcounter(request):
     if request.method == 'POST':
@@ -190,8 +220,14 @@ def send_email(request):
 def services(request):
     return render(request, "services.html")
 
-def payment(request):
-    return render(request, "payment.html")   
+def payment(request, plan_id):
+    # Retrieve the plan based on the plan_id
+    plan = get_object_or_404(MembershipPlan, id=plan_id)
+
+    # You can pass the plan object to the payment template
+    context = {'plan': plan}
+
+    return render(request, "payment.html", context)  
 
 def plans_view(request):
     membership_plans = MembershipPlan.objects.all()

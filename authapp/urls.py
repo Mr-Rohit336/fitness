@@ -8,7 +8,7 @@ urlpatterns = [
     path('login/',views.handlelogin,name="handlelogin"),
     path('logout/',views.handlelogout,name="handlelogout"),
     path('contact/',views.contact,name="contact"),
-    path('join/',views.enroll,name="enroll"),    
+    path('join/<int:plan_id>/',views.enroll,name="enroll"),    
     path('profile/',views.profile,name="profile"),
     path('gallery/',views.gallery,name="gallery"),
     path('attendance/',views.attendance,name="attendance"),
@@ -20,7 +20,7 @@ urlpatterns = [
    #payment
     path('plans/', views.plans_view, name="membership_plans"),
     path('plandetails/<int:plan_id>/', views.plans_details_view, name="membership_plans_details"),
-    path('payment/', views.payment, name="payments"),   
+    path('payment/<int:plan_id>/', views.payment, name="payments"),   
 ]
  
  
