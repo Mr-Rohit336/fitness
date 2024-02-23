@@ -11,8 +11,10 @@ Payment
                 <h3>Selected Plan</h3>
                 <img src="{{ plan.img.url }}" class="card-img-top" alt="Plan Image">                
                 <p class="card-text">{{ plan.plan }} - {{ price.price }}</p><br>
-                <p class="card-text">{{ plan.plandetails }}</p>
+              <p class="card-text">{{ plan.plandetails }}</p>
             </div>
+          </div>    
+    </div><br>
             <div class="col-md-6">
                 <!-- Payment form or integration with PayPal API can be added here -->
                 {% comment %} start of button {% endcomment %}
@@ -86,8 +88,7 @@ Payment
               </div> 
                 {% comment %} end of button {% endcomment %}
             </div>
-        </div>
-    </div>
+        
 
 
 {% endblock body %}                                                                                              

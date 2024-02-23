@@ -155,25 +155,6 @@ def enroll(request, plan_id):
         return render(request, "enroll.html", context)
 
 
-# def enroll(request):
-#     if not request.user.is_authenticated:
-#         messages.warning(request, "Please Login And Try  Again")
-#         return redirect('/login')    
-#     SelectTrainer=Trainer.objects.all()
-#     context={"SelectTrainer":SelectTrainer}
-#     if request.method=="POST":
-#         FullName=request.POST.get('FullName')
-#         email=request.POST.get('email')
-#         PhoneNumber=request.POST.get('PhoneNumber')
-#         gender=request.POST.get('gender')        
-#         DOB=request.POST.get('DOB')        
-#         trainer=request.POST.get('trainer')        
-#         address=request.POST.get('address')
-#         query=Enrollment(FullName=FullName, Email=email, PhoneNumber=PhoneNumber, Gender=gender, DOB=DOB, SelectTrainer=trainer,  Address=address)
-#         query.save()
-#         messages.info(request, "Thanks For Enrollment")
-#         return redirect('/payment')        
-#     return render(request, "enroll.html",context)
 
 def enrollcounter(request):
     if request.method == 'POST':
@@ -225,7 +206,7 @@ def payment(request, plan_id):
     plan = get_object_or_404(MembershipPlan, id=plan_id)
 
     # You can pass the plan object to the payment template
-    context = {'plan': plan}
+    context = {'plan': plan, 'price':plan}
 
     return render(request, "payment.html", context)  
 
@@ -234,6 +215,5 @@ def plans_view(request):
     return render(request, "plans.html", {"membership_plans": membership_plans})
 
 def plans_details_view(request, plan_id): 
-    plan = get_object_or_404(MembershipPlan, id=plan_id)
-    price = get_object_or_404(MembershipPlan, id=plan_id)
-    return render(request, 'plandetails.html', {'plan': plan, 'price':price})
+    plan = get_object_or_404(MembershipPlan, id=plan_id)   
+    return render(request, 'plandetails.html', {'plan': plan, 'price':plan})

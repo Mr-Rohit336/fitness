@@ -21,7 +21,9 @@ Plans Details
           <img src="{{ plan.img.url }}" class="card-img-top" alt="Plan Image">                
           <p class="card-text">{{ plan.plan }} - {{ price.price }}</p><br>
           <p class="card-text">{{ plan.plandetails }}</p>
-          <a href="{% url 'enroll' plan.id  %}" class="btn btn-primary mt-3">Buy Now</a>
+          <div class="d-grid gap-2">
+          <a href="{% url 'enroll' plan.id  %}" class="btn btn-primary mt-3" style="background-color: #EC3642;">Buy Now</a>
+          </div>
       </div>
   </div>
 </div>
