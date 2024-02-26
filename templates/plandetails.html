@@ -8,18 +8,33 @@ Plans Details
 <style>
   /* Custom CSS to center the container */
   .custom-container {
-      max-width: 500px; /* Adjust the max-width as needed */
+      max-width: 800px; /* Adjust the max-width as needed */
       margin: 0 auto; /* Centering the container */
       padding: 0 15px; /* Adding some padding to the sides */
+  }
+
+  .card {
+      display: flex;
+      flex-direction: row; /* Align items in row */
+  }
+
+  .card-body {
+      flex: 1; /* Occupy remaining space */
+  }
+
+  .card-img-top {
+      max-width: 400px; /* Set maximum width for the image */
+      height: 600; /* Maintain aspect ratio */
+      margin-right: 20px; /* Add some space between image and content */
   }
 </style>
 
 <div class="container custom-container mt-5"> <!-- Add custom-container class -->
   <h1>Plan Details</h1>
-  <div class="card mt-3">
+  <div class="card mt-6">
+      <img src="{{ plan.img.url }}" class="card-img-top" alt="Plan Image" style="height: 600px; width: 400px;">
       <div class="card-body">
-          <img src="{{ plan.img.url }}" class="card-img-top" alt="Plan Image">                
-          <p class="card-text">{{ plan.plan }} - {{ price.price }}</p><br>
+          <p class="card-text">{{ plan.plan }} - ₹ {{ price.price }}</p><br>
           <p class="card-text">{{ plan.plandetails }}</p>
           <div class="d-grid gap-2">
           <a href="{% url 'enroll' plan.id  %}" class="btn btn-primary mt-3" style="background-color: #EC3642;">Buy Now</a>

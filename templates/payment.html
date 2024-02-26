@@ -3,92 +3,117 @@
 Payment
 {% endblock title %}
 {% block body %}
-    <title>Payment</title>    
-    <div class="container">
-        <h1 class="mt-5">Payment</h1>
-        <div class="row">
-            <div class="col-md-6">
-                <h3>Selected Plan</h3>
-                <img src="{{ plan.img.url }}" class="card-img-top" alt="Plan Image">                
-                <p class="card-text">{{ plan.plan }} - {{ price.price }}</p><br>
-              <p class="card-text">{{ plan.plandetails }}</p>
-            </div>
-          </div>    
-    </div><br>
-            <div class="col-md-6">
-                <!-- Payment form or integration with PayPal API can be added here -->
-                {% comment %} start of button {% endcomment %}
-                <div class="container">
-    
-
-                  <!-- Set up a container element for the button -->
-                  <div id="paypal-button-container"></div>
-              
-                  <!-- Include the PayPal JavaScript SDK  -->
-                  <script src="https://www.paypal.com/sdk/js?client-id=AZCWRVnXtRyabZyY0KwFp-bXHadflPL7L5IwE025HN_uxsE1tQt0AmuYn-kUo9_SLSVxGSkvhcdoV3YP&currency=USD"></script>
-              
-                  <script>
-                      // Render the PayPal button into #paypal-button-container
-                      paypal.Buttons({
-              
-                          // Call your server to set up the transaction
-                          createOrder: function(data, actions) {
-                              return fetch('/demo/checkout/api/paypal/order/create/', {
-                                  method: 'post'
-                              }).then(function(res) {
-                                  return res.json();
-                              }).then(function(orderData) {
-                                  return orderData.id;
-                              });
-                          },
-              
-                          // Call your server to finalize the transaction
-                          onApprove: function(data, actions) {
-                              return fetch('/demo/checkout/api/paypal/order/' + data.orderID + '/capture/', {
-                                  method: 'post'
-                              }).then(function(res) {
-                                  return res.json();
-                              }).then(function(orderData) {
-                                  // Three cases to handle:
-                                  //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-                                  //   (2) Other non-recoverable errors -> Show a failure message
-                                  //   (3) Successful transaction -> Show confirmation or thank you
-              
-                                  // This example reads a v2/checkout/orders capture response, propagated from the server
-                                  // You could use a different API or structure for your 'orderData'
-                                  var errorDetail = Array.isArray(orderData.details) && orderData.details[0];
-              
-                                  if (errorDetail && errorDetail.issue === 'INSTRUMENT_DECLINED') {
-                                      return actions.restart(); // Recoverable state, per:
-                                      // https://developer.paypal.com/docs/checkout/integration-features/funding-failure/
-                                  }
-              
-                                  if (errorDetail) {
-                                      var msg = 'Sorry, your transaction could not be processed.';
-                                      if (errorDetail.description) msg += '\n\n' + errorDetail.description;
-                                      if (orderData.debug_id) msg += ' (' + orderData.debug_id + ')';
-                                      return alert(msg); // Show a failure message (try to avoid alerts in production environments)
-                                  }
-              
-                                  // Successful capture! For demo purposes:
-                                  console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                                  var transaction = orderData.purchase_units[0].payments.captures[0];
-                                  alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
-              
-                                  // Replace the above to show a success message within this page, e.g.
-                                  // const element = document.getElementById('paypal-button-container');
-                                  // element.innerHTML = '';
-                                  // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-                                  // Or go to another URL:  actions.redirect('thank_you.html');
-                              });
-                          }
-              
-                      }).render('#paypal-button-container');
-                  </script>
-              </div> 
-                {% comment %} end of button {% endcomment %}
-            </div>
+<style>
+    /* Custom CSS to center the container */
+    .custom-container {
+        max-width: 1000px; /* Adjust the max-width as needed */
+        margin: 0 auto; /* Centering the container */       
+        padding: 0 15px; /* Adding some padding to the sides */
+    }
+  
+    .card {
+        display: flex;
+        flex-direction: row; /* Align items in row */
         
+        
+    }
+  
+    .card-body {
+        flex: 1; /* Occupy remaining space */
+    }
+  
+    .card-img-top {
+        max-width: 400px; /* Set maximum width for the image */
+        height: 600; /* Maintain aspect ratio */
+        margin-right: 20px; /* Add some space between image and content */
+    }
+    .button-container {
+        display: flex;
+        
+    }
+  </style>
+  
+<div class="container custom-container mt-5"> <!-- Add custom-container class -->
+    <h1>Payment</h1>
+    <div class="card mt-6">
+        <img src="{{ plan.img.url }}" class="card-img-top" alt="Plan Image">
+            <div class="card-body">
+                <p class="card-text">{{ plan.plan }} - ₹ {{ price.price }}</p><br>
+                <p class="card-text">{{ plan.plandetails }}</p>
+                <div class="d-grid gap-2">
+                    
+                    {% comment %} start of button {% endcomment %}
+<div class="container button-container" style="margin-top: 50px;">
+    <!-- Set up a container element for the button -->
+    <div id="paypal-button-container"></div>
+
+    <!-- Include the PayPal JavaScript SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
+
+    <script>
+        // Render the PayPal button into #paypal-button-container
+        paypal.Buttons({
+
+            // Call your server to set up the transaction
+            createOrder: function(data, actions) {
+                return fetch('/demo/checkout/api/paypal/order/create/', {
+                    method: 'post'
+                }).then(function(res) {
+                    return res.json();
+                }).then(function(orderData) {
+                    return orderData.id;
+                });
+            },
+
+            // Call your server to finalize the transaction
+            onApprove: function(data, actions) {
+                return fetch('/demo/checkout/api/paypal/order/' + data.orderID + '/capture/', {
+                    method: 'post'
+                }).then(function(res) {
+                    return res.json();
+                }).then(function(orderData) {
+                    // Three cases to handle:
+                    //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+                    //   (2) Other non-recoverable errors -> Show a failure message
+                    //   (3) Successful transaction -> Show confirmation or thank you
+
+                    // This example reads a v2/checkout/orders capture response, propagated from the server
+                    // You could use a different API or structure for your 'orderData'
+                    var errorDetail = Array.isArray(orderData.details) && orderData.details[0];
+
+                    if (errorDetail && errorDetail.issue === 'INSTRUMENT_DECLINED') {
+                        return actions.restart(); // Recoverable state, per:
+                        // https://developer.paypal.com/docs/checkout/integration-features/funding-failure/
+                    }
+
+                    if (errorDetail) {
+                        var msg = 'Sorry, your transaction could not be processed.';
+                        if (errorDetail.description) msg += '\n\n' + errorDetail.description;
+                        if (orderData.debug_id) msg += ' (' + orderData.debug_id + ')';
+                        return alert(msg); // Show a failure message (try to avoid alerts in production environments)
+                    }
+
+                    // Successful capture! For demo purposes:
+                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                    var transaction = orderData.purchase_units[0].payments.captures[0];
+                    alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+
+                    // Replace the above to show a success message within this page, e.g.
+                    // const element = document.getElementById('paypal-button-container');
+                    // element.innerHTML = '';
+                    // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                    // Or go to another URL:  actions.redirect('thank_you.html');
+                });
+            }
+
+        }).render('#paypal-button-container');
+    </script>
+</div>    
+{% comment %} end button {% endcomment %}
 
 
+                </div>
+            <div>
+    </div>                
+</div>    
 {% endblock body %}                                                                                              
