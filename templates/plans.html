@@ -7,13 +7,16 @@ Membership Plans
 {% block body %} 
 
 <style>
+    .custome-container{
+        margin-bottom: 50px;
+    }
     .card-body{
         height: auto;
         width: 100%;
     }
 
     .card-img-top{
-        height: 300px;
+        height: 414px;
         width: 322px;
     }
 </style>
@@ -21,7 +24,7 @@ Membership Plans
     <h1 >Membership Plans</h1><br>
     <div class="row">
         {% for plan in membership_plans %}
-        <div class="col-md-4">
+        <div class="col-md-4 custome-container">
             <div class="card plan-card">
                 <div class="card-body">
                     <!-- Display the plan image -->

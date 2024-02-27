@@ -1,24 +1,38 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block title %}
-reset password
+Reset Password
 {% endblock title %}
 
-{% block head %}
-<form method="post" action="/reset/<uidb64>/<token>/">
-    {% csrf_token %}
+{% block body %} 
 
-    <div class="form-group">
-        <label for="id_new_password1">New Password:</label>
-        <input type="password" name="new_password1" id="id_new_password1" class="form-control" required>
-        <small class="form-text text-muted">
-            {{ form.new_password1.help_text }}
-        </small>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-center">Reset Password</h1>
+                    <form method="post">
+                        {% csrf_token %}
+                        <!-- Render each form field manually -->
+                        <div class="mb-3">
+                            <label for="id_new_password1" class="form-label">New Password:</label><br>
+                            {{ form.new_password1 }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_new_password2" class="form-label">Confirm New Password:</label><br>
+                            {{ form.new_password2 }}
+                        </div>
+                        
+                        <!-- Button styled like a div -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary mt-3" style="background-color: #EC3642;">Reset Password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="id_new_password2">Confirm New Password:</label>
-        <input type="password" name="new_password2" id="id_new_password2" class="form-control" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Change Password</button>
-</form>
-{% endblock head %}
+</div>
+
+{% endblock body %}
